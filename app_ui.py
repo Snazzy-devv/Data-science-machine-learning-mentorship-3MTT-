@@ -64,7 +64,7 @@ if submit:
     try:
         # Call your FastAPI (Ensure FastAPI is running on port 8000)
         with st.spinner('Analyzing...'):
-            response = requests.post("http://127.0.0.1:8000/predict", json=payload)
+            response = requests.post("https://fraud-detection-3mtt.onrender.com/predict", json=payload)
             result = response.json()
 
         # 6. Display Results
