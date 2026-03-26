@@ -7,8 +7,8 @@ This project aims to build a machine learning model capable of detecting fraudul
 This repository contains an end-to-end machine learning solution designed to identify fraudulent financial transactions. Using a highly imbalanced dataset, we implemented various sampling techniques and models to prioritize high recall without sacrificing too much precision.
 The project is deployed with a FastAPI backend and a Streamlit frontend for real-time predictions.
 🚀 Live Demos
- * Web Interface: Streamlit Cloud Link
- * API Endpoint: Render Deployment Link
+ * Web Interface: Streamlit Cloud Link: https://credictcardfraud.streamlit.app/
+ * API Endpoint: Render Deployment Link: https://fraud-detection-3mtt.onrender.com
 📊 Project Overview
 Fraud detection is challenging because fraudulent cases are extremely rare. In this dataset of 284,806 transactions, only 473 (0.167%) were fraudulent.
 Key Features:
