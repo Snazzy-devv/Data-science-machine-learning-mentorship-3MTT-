@@ -70,6 +70,7 @@ The API handles the logic and model inference. It expects a JSON payload of tran
  * CORS: Enabled for Streamlit integration.
 Streamlit Cloud
 The user-facing dashboard allows users to input transaction details manually or upload a CSV to check for fraudulent activity.
+
 💡 Key Insights
  * Precision/Recall Trade-off: In fraud, missing a "1" (False Negative) is more expensive than misclassifying a "0" (False Positive).
  * SMOTE Effectiveness: Using synthetic data generation significantly boosted the model's ability to learn fraud patterns compared to simple undersampling, which threw away too much valuable data.
