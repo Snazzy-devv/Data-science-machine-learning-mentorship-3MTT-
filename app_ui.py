@@ -5,6 +5,61 @@ import random
 # --- Page Config ---
 st.set_page_config(page_title="Fraud Detection System", page_icon="🔒", layout="centered")
 
+# --- Custom CSS Styling ---
+st.markdown(
+    """
+    <style>
+    /* Set background color for the whole app */
+    .stApp {
+        background-color: #0B3D91;
+        color: #FFFFFF;
+        font-family: 'Arial', sans-serif;
+    }
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background-color: #062F6C;
+        color: #FFFFFF;
+        padding: 20px;
+    }
+    /* Form input styling */
+    .stNumberInput > div > input {
+        background-color: #1A4570;
+        color: #FFFFFF;
+        border: 1px solid #FFFFFF;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    .stSelectbox > div > div {
+        background-color: #1A4570;
+        color: #FFFFFF;
+        border-radius: 5px;
+    }
+    /* Buttons */
+    div.stButton > button {
+        background-color: #FF4B4B;
+        color: white;
+        font-weight: bold;
+        padding: 0.5em 1.5em;
+        border-radius: 10px;
+        border: none;
+    }
+    div.stButton > button:hover {
+        background-color: #FF2A2A;
+        color: white;
+    }
+    /* Headings */
+    h1, h2, h3 {
+        color: #FFD700;
+    }
+    /* Markdown text */
+    .stMarkdown {
+        color: #FFFFFF;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # --- Sidebar ---
 with st.sidebar:
     st.title("About")
@@ -12,7 +67,7 @@ with st.sidebar:
     st.markdown("---")
     st.write("Developed by: Your Team")
 
-    # Generate Random Transaction Button in Sidebar
+    # Generate Random Transaction Button
     if st.button("Generate Random Transaction"):
         st.session_state.time = random.uniform(0, 86400)        # realistic Time
         st.session_state.amount = random.uniform(0, 200)        # realistic Amount
@@ -28,15 +83,15 @@ if "amount" not in st.session_state:
     st.session_state.amount = 0.0
 
 # --- Main Page Header ---
-st.title("🔒 Credit Card Fraud Detector")
-st.write("Enter transaction details below or use 'Generate Random Transaction' from the sidebar.")
+st.markdown("<h1>🔒 Credit Card Fraud Detector</h1>", unsafe_allow_html=True)
+st.markdown("<p>Enter transaction details below or generate a random transaction from the sidebar.</p>", unsafe_allow_html=True)
 
 # --- Transaction Form ---
 with st.form("fraud_form"):
     time = st.number_input("Time", min_value=0.0, step=0.1, value=st.session_state.time)
     amount = st.number_input("Amount", min_value=0.0, step=0.1, value=st.session_state.amount)
 
-    # V1–V28 Inputs
+    # V1–V28 Inputs in 4 columns
     V_inputs = {}
     cols = st.columns(4)
     for i in range(1, 29):
