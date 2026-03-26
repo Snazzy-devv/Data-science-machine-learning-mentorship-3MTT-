@@ -4,17 +4,10 @@ import random
 
 st.set_page_config(page_title="Fraud Detection System", page_icon="🔒", layout="centered")
 
-# --- Sidebar ---
-with st.sidebar:
-    st.title("About")
-    st.info("Detect fraudulent credit card transactions using ML.")
-    st.markdown("---")
-    st.write("Developed by: Your Team")
-
 st.title("🔒 Credit Card Fraud Detector")
-st.write("Enter transaction details or generate a random transaction for testing:")
+st.write("Enter transaction details or generate a realistic random transaction:")
 
-# --- Initialize session state for V1–V28 ---
+# --- Initialize session state ---
 if "V_inputs" not in st.session_state:
     st.session_state.V_inputs = {f"V{i}": 0.0 for i in range(1, 29)}
 if "time" not in st.session_state:
@@ -22,20 +15,23 @@ if "time" not in st.session_state:
 if "amount" not in st.session_state:
     st.session_state.amount = 0.0
 
-# --- Generate Random Transaction ---
+# --- Generate Realistic Random Transaction ---
 if st.button("Generate Random Transaction"):
-    st.session_state.time = random.uniform(0, 172792)      # Time
-    st.session_state.amount = random.uniform(0, 2000)      # Amount
+    # Time: most transactions occur in early seconds
+    st.session_state.time = random.uniform(0, 86400)  # within first 24 hours
+    # Amount: small to medium amounts are most common
+    st.session_state.amount = random.uniform(0, 200)  
+
+    # V1–V28: normally distributed like PCA output (-5 to +5)
     for i in range(1, 29):
-        st.session_state.V_inputs[f"V{i}"] = random.uniform(-5, 5)  # V1–V28
+        st.session_state.V_inputs[f"V{i}"] = random.gauss(0, 1.5)  # mean=0, std=1.5
 
 # --- Transaction Form ---
 with st.form("fraud_form"):
-    # Time & Amount
     time = st.number_input("Time", min_value=0.0, step=0.1, value=st.session_state.time)
     amount = st.number_input("Amount", min_value=0.0, step=0.1, value=st.session_state.amount)
 
-    # Dynamically generate V1–V28 inputs
+    # V1–V28 inputs dynamically
     V_inputs = {}
     cols = st.columns(4)
     for i in range(1, 29):
@@ -44,7 +40,7 @@ with st.form("fraud_form"):
 
     submit = st.form_submit_button("Analyze Transaction")
 
-# --- Submit to API ---
+# --- Send to API ---
 if submit:
     payload = {"Time": time, "Amount": amount}
     payload.update(V_inputs)
