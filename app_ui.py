@@ -3,23 +3,32 @@ import requests
 import random
 
 # --- Page Config ---
-st.set_page_config(page_title="Fraud Detection System", page_icon="🔒", layout="centered")
+st.set_page_config(page_title="Fraud Detection System", page_icon="🔒", layout="wide")
 
 # --- Custom CSS Styling ---
 st.markdown(
     """
     <style>
-    /* Set background color for the whole app */
+    /* Full app background */
     .stApp {
         background-color: #0B3D91;
         color: #FFFFFF;
         font-family: 'Arial', sans-serif;
+        min-height: 100vh;
     }
     /* Sidebar styling */
     [data-testid="stSidebar"] {
         background-color: #062F6C;
         color: #FFFFFF;
         padding: 20px;
+    }
+    /* Sidebar text white */
+    [data-testid="stSidebar"] .css-1d391kg, 
+    [data-testid="stSidebar"] .stMarkdown, 
+    [data-testid="stSidebar"] h1, 
+    [data-testid="stSidebar"] h2, 
+    [data-testid="stSidebar"] h3 {
+        color: #FFFFFF;
     }
     /* Form input styling */
     .stNumberInput > div > input {
@@ -28,11 +37,6 @@ st.markdown(
         border: 1px solid #FFFFFF;
         border-radius: 5px;
         padding: 5px;
-    }
-    .stSelectbox > div > div {
-        background-color: #1A4570;
-        color: #FFFFFF;
-        border-radius: 5px;
     }
     /* Buttons */
     div.stButton > button {
@@ -50,10 +54,6 @@ st.markdown(
     /* Headings */
     h1, h2, h3 {
         color: #FFD700;
-    }
-    /* Markdown text */
-    .stMarkdown {
-        color: #FFFFFF;
     }
     </style>
     """,
@@ -115,10 +115,25 @@ if submit:
             result = response.json()
 
         st.markdown("---")
+        # Highlight results in bright white boxes
         if result.get("is_fraud") == 1:
-            st.error("🚨 FRAUD DETECTED!")
+            st.markdown(
+                """
+                <div style='background-color:#FFFFFF; color:#FF0000; padding:20px; border-radius:10px; font-size:22px; text-align:center; font-weight:bold;'>
+                    🚨 FRAUD DETECTED!
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         else:
-            st.success("✅ Transaction is SAFE.")
+            st.markdown(
+                """
+                <div style='background-color:#FFFFFF; color:#00AA00; padding:20px; border-radius:10px; font-size:22px; text-align:center; font-weight:bold;'>
+                    ✅ Transaction is SAFE.
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
     except Exception as e:
         st.error(f"Could not connect to the backend: {e}")
