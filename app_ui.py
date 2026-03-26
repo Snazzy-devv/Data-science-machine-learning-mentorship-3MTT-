@@ -65,7 +65,7 @@ with st.sidebar:
     st.title("About")
     st.info("This system uses a Machine Learning model to detect fraudulent transactions in real-time.")
     st.markdown("---")
-    st.write("Developed by: Your Team")
+    st.write("Developed by: Team Members")
 
     # Generate Random Transaction Button
     if st.button("Generate Random Transaction"):
