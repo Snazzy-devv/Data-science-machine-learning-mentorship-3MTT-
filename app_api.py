@@ -1,3 +1,4 @@
+# main.py
 from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
@@ -6,13 +7,15 @@ import os
 
 app = FastAPI()
 
-# Load model & scaler
+# --- Load model and scaler ---
 base_dir = os.path.dirname(__file__)
 model = joblib.load(os.path.join(base_dir, "fraud_model.pkl"))
-scaler = joblib.load(os.path.join(base_dir, "scaler.pkl"))
+scaler = joblib.load(os.path.join(base_dir, "scaler.pkl"))  # scaler for Time & Amount only
 
-# Input schema (V1–V28)
+# --- Input schema ---
 class FraudInput(BaseModel):
+    Time: float
+    Amount: float
     V1: float
     V2: float
     V3: float
@@ -48,19 +51,23 @@ def home():
 
 @app.post("/predict")
 def predict(data: FraudInput):
-    try:
-        features = np.array([[
-            data.V1, data.V2, data.V3, data.V4, data.V5, data.V6,
-            data.V7, data.V8, data.V9, data.V10, data.V11, data.V12,
-            data.V13, data.V14, data.V15, data.V16, data.V17, data.V18,
-            data.V19, data.V20, data.V21, data.V22, data.V23, data.V24,
-            data.V25, data.V26, data.V27, data.V28
-        ]])
+    # --- Prepare features ---
+    features = [
+        data.Time,
+        data.Amount,
+        data.V1, data.V2, data.V3, data.V4, data.V5, data.V6,
+        data.V7, data.V8, data.V9, data.V10, data.V11, data.V12,
+        data.V13, data.V14, data.V15, data.V16, data.V17, data.V18,
+        data.V19, data.V20, data.V21, data.V22, data.V23, data.V24,
+        data.V25, data.V26, data.V27, data.V28
+    ]
 
-        scaled = scaler.transform(features)
-        prediction = model.predict(scaled)[0]
+    # --- Scale only Time and Amount ---
+    features[0:2] = scaler.transform(np.array(features[0:2]).reshape(1,-1))[0]
 
-        return {"is_fraud": int(prediction)}
+    features_array = np.array(features).reshape(1,-1)
 
-    except Exception as e:
-        return {"error": str(e)}
+    # --- Predict ---
+    prediction = model.predict(features_array)[0]
+
+    return {"is_fraud": int(prediction)}
