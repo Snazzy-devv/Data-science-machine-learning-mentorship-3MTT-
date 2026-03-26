@@ -69,7 +69,7 @@ with st.sidebar:
 
     # Generate Random Transaction Button
     if st.button("Generate Random Transaction"):
-        st.session_state.time = random.uniform(0, 86400)        # realistic Time
+        st.session_state.time = random.uniform(0, 6400)        # realistic Time
         st.session_state.amount = random.uniform(0, 200)        # realistic Amount
         for i in range(1, 29):
             st.session_state.V_inputs[f"V{i}"] = random.gauss(0, 1.5)  # realistic V1–V28
