@@ -9,6 +9,7 @@ The project is deployed with a FastAPI backend and a Streamlit frontend for real
 🚀 Live Demos
  * Web Interface: Streamlit Cloud Link: https://credictcardfraud.streamlit.app/
  * API Endpoint: Render Deployment Link: https://fraud-detection-3mtt.onrender.com
+
 📊 Project Overview
 Fraud detection is challenging because fraudulent cases are extremely rare. In this dataset of 284,806 transactions, only 473 (0.167%) were fraudulent.
 Key Features:
