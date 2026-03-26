@@ -14,25 +14,33 @@ with st.sidebar:
 st.title("🔒 Credit Card Fraud Detector")
 st.write("Enter transaction details or generate a random transaction for testing:")
 
+# --- Initialize session state for V1–V28 ---
+if "V_inputs" not in st.session_state:
+    st.session_state.V_inputs = {f"V{i}": 0.0 for i in range(1, 29)}
+if "time" not in st.session_state:
+    st.session_state.time = 0.0
+if "amount" not in st.session_state:
+    st.session_state.amount = 0.0
+
+# --- Generate Random Transaction ---
+if st.button("Generate Random Transaction"):
+    st.session_state.time = random.uniform(0, 172792)      # Time
+    st.session_state.amount = random.uniform(0, 2000)      # Amount
+    for i in range(1, 29):
+        st.session_state.V_inputs[f"V{i}"] = random.uniform(-5, 5)  # V1–V28
+
 # --- Transaction Form ---
 with st.form("fraud_form"):
     # Time & Amount
-    time = st.number_input("Time", min_value=0.0, step=0.1)
-    amount = st.number_input("Amount", min_value=0.0, step=0.1)
+    time = st.number_input("Time", min_value=0.0, step=0.1, value=st.session_state.time)
+    amount = st.number_input("Amount", min_value=0.0, step=0.1, value=st.session_state.amount)
 
     # Dynamically generate V1–V28 inputs
     V_inputs = {}
     cols = st.columns(4)
     for i in range(1, 29):
         col = cols[(i-1)%4]
-        V_inputs[f"V{i}"] = col.number_input(f"V{i}", value=0.0, format="%.6f")
-
-    # Random transaction button
-    if st.form_submit_button("Generate Random Transaction"):
-        time = random.uniform(0, 172792)  # roughly dataset Time range
-        amount = random.uniform(0, 2000)  # roughly dataset Amount range
-        for i in range(1, 29):
-            V_inputs[f"V{i}"] = random.uniform(-5, 5)  # V1–V28 values are PCA-like
+        V_inputs[f"V{i}"] = col.number_input(f"V{i}", value=st.session_state.V_inputs[f"V{i}"], format="%.6f")
 
     submit = st.form_submit_button("Analyze Transaction")
 
