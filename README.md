@@ -46,6 +46,7 @@ We prioritized Recall and ROC-AUC to ensure that as few fraudulent transactions 
 💻 Installation & Local Usage
 1. Clone the repository
 git clone https://github.com/Snazzy-devv/Data-science-machine-learning-mentorship-3MTT-.git
+
 cd fraud-detection-ml
 
 2. Install dependencies
