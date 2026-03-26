@@ -2,12 +2,24 @@ import streamlit as st
 import requests
 import random
 
+# --- Page Config ---
 st.set_page_config(page_title="Fraud Detection System", page_icon="🔒", layout="centered")
 
-st.title("🔒 Credit Card Fraud Detector")
-st.write("Enter transaction details or generate a realistic random transaction:")
+# --- Sidebar ---
+with st.sidebar:
+    st.title("About")
+    st.info("This system uses a Machine Learning model to detect fraudulent transactions in real-time.")
+    st.markdown("---")
+    st.write("Developed by: Your Team")
 
-# --- Initialize session state ---
+    # Generate Random Transaction Button in Sidebar
+    if st.button("Generate Random Transaction"):
+        st.session_state.time = random.uniform(0, 86400)        # realistic Time
+        st.session_state.amount = random.uniform(0, 200)        # realistic Amount
+        for i in range(1, 29):
+            st.session_state.V_inputs[f"V{i}"] = random.gauss(0, 1.5)  # realistic V1–V28
+
+# --- Initialize session state if first run ---
 if "V_inputs" not in st.session_state:
     st.session_state.V_inputs = {f"V{i}": 0.0 for i in range(1, 29)}
 if "time" not in st.session_state:
@@ -15,23 +27,16 @@ if "time" not in st.session_state:
 if "amount" not in st.session_state:
     st.session_state.amount = 0.0
 
-# --- Generate Realistic Random Transaction ---
-if st.button("Generate Random Transaction"):
-    # Time: most transactions occur in early seconds
-    st.session_state.time = random.uniform(0, 86400)  # within first 24 hours
-    # Amount: small to medium amounts are most common
-    st.session_state.amount = random.uniform(0, 200)  
-
-    # V1–V28: normally distributed like PCA output (-5 to +5)
-    for i in range(1, 29):
-        st.session_state.V_inputs[f"V{i}"] = random.gauss(0, 1.5)  # mean=0, std=1.5
+# --- Main Page Header ---
+st.title("🔒 Credit Card Fraud Detector")
+st.write("Enter transaction details below or use 'Generate Random Transaction' from the sidebar.")
 
 # --- Transaction Form ---
 with st.form("fraud_form"):
     time = st.number_input("Time", min_value=0.0, step=0.1, value=st.session_state.time)
     amount = st.number_input("Amount", min_value=0.0, step=0.1, value=st.session_state.amount)
 
-    # V1–V28 inputs dynamically
+    # V1–V28 Inputs
     V_inputs = {}
     cols = st.columns(4)
     for i in range(1, 29):
