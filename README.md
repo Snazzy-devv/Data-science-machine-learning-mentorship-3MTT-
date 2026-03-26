@@ -23,6 +23,7 @@ Key Features:
  * Deployment: GitHub, Streamlit Cloud, Render
 📈 Model Performance
 We prioritized Recall and ROC-AUC to ensure that as few fraudulent transactions as possible go undetected.
+
 | Model | Dataset | Precision | Recall | F1 Score | ROC-AUC |
 |---|---|---|---|---|---|
 | Random Forest (Selected) | SMOTE | 0.9114 | 0.7579 | 0.8276 | 0.9656 |
@@ -44,7 +45,7 @@ We prioritized Recall and ROC-AUC to ensure that as few fraudulent transactions 
 
 💻 Installation & Local Usage
 1. Clone the repository
-git clone https://github.com/your-username/fraud-detection-ml.git
+git clone https://github.com/Snazzy-devv/Data-science-machine-learning-mentorship-3MTT-.git
 cd fraud-detection-ml
 
 2. Install dependencies
