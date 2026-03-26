@@ -6,6 +6,7 @@ This project aims to build a machine learning model capable of detecting fraudul
 
 This repository contains an end-to-end machine learning solution designed to identify fraudulent financial transactions. Using a highly imbalanced dataset, we implemented various sampling techniques and models to prioritize high recall without sacrificing too much precision.
 The project is deployed with a FastAPI backend and a Streamlit frontend for real-time predictions.
+
 🚀 Live Demos
  * Web Interface: Streamlit Cloud Link: https://credictcardfraud.streamlit.app/
  * API Endpoint: Render Deployment Link: https://fraud-detection-3mtt.onrender.com
@@ -16,12 +17,14 @@ Key Features:
  * Data Cleaning: Handled 1,081 duplicate rows and performed feature scaling on Time and Amount.
  * Imbalance Handling: Compared Random Undersampling vs. SMOTE (Synthetic Minority Oversampling Technique).
  * Model Benchmarking: Evaluated Logistic Regression, Random Forest, and Gradient Boosting across different data distributions.
+
 🛠️ Tech Stack
  * Machine Learning: Scikit-learn, Imbalanced-learn (SMOTE)
  * Data Analysis: Pandas, NumPy, Matplotlib, Seaborn
  * API Framework: FastAPI
  * Web App: Streamlit
  * Deployment: GitHub, Streamlit Cloud, Render
+
 📈 Model Performance
 We prioritized Recall and ROC-AUC to ensure that as few fraudulent transactions as possible go undetected.
 
@@ -43,6 +46,7 @@ We prioritized Recall and ROC-AUC to ensure that as few fraudulent transactions 
 │   └── app.py
 ├── requirements.txt    # Project dependencies
 └── README.md
+
 
 💻 Installation & Local Usage
 1. Clone the repository
